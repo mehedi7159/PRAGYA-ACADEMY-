@@ -1,0 +1,6 @@
+{
+  "name": "PRAGYA ACADEMY Smart Fee Management",
+  "description": "Professional Fee Management System suitable for Coaching Centers, Madrasas, and Academies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

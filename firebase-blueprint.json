@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Information about a student registered in the academy",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "STU prefix ID" },
+        "name": { "type": "string" },
+        "fatherName": { "type": "string" },
+        "motherName": { "type": "string" },
+        "mobile": { "type": "string" },
+        "guardianMobile": { "type": "string" },
+        "address": { "type": "string" },
+        "batch": { "type": "string" },
+        "monthlyFee": { "type": "number" },
+        "discount": { "type": "number" },
+        "finalFee": { "type": "number" },
+        "admissionDate": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["Active", "Inactive"] },
+        "notes": { "type": "string" },
+        "userId": { "type": "string", "description": "Owner of the data" }
+      },
+      "required": ["id", "name", "batch", "finalFee", "status", "userId"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Fee payment record for a student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "month": { "type": "string", "description": "YYYY-MM" },
+        "studentId": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["Cash", "bKash", "Nagad", "Bank"] },
+        "receivedBy": { "type": "string" },
+        "receiptNumber": { "type": "string" },
+        "notes": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["date", "month", "studentId", "amount", "userId"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Institutional expense record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "paidBy": { "type": "string" },
+        "notes": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["date", "category", "amount", "userId"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record for a student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "studentId": { "type": "string" },
+        "status": { "type": "string", "enum": ["Present", "Absent", "Late"] },
+        "userId": { "type": "string" }
+      },
+      "required": ["date", "studentId", "status", "userId"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Academy specific settings like batches and categories",
+      "type": "object",
+      "properties": {
+        "batches": { "type": "array" },
+        "expenseCategories": { "type": "array" },
+        "language": { "type": "string", "enum": ["en", "bn"] },
+        "userId": { "type": "string" }
+      },
+      "required": ["userId"]
+    }
+  },
+  "firestore": {
+    "/students/{studentDocId}": {
+      "schema": "Student",
+      "description": "Collection of all students across all users, isolated by userId"
+    },
+    "/payments/{paymentId}": {
+      "schema": "Payment",
+      "description": "Collection of all payments"
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Collection of all institutional expenses"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Collection of attendance records"
+    },
+    "/settings/{userId}": {
+      "schema": "Settings",
+      "description": "User specific settings"
+    }
+  }
+}
